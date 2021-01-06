@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,14 +10,13 @@ using System.Windows.Forms;
 
 namespace ImgViewer.WinForm
 {
-    public partial class Form1 : Form
+    public partial class Form1
     {
-        public Form1()
+        PictureBox _pictureBox = new PictureBox
         {
-            InitializeComponent();
-
-            Controls.Add(_pictureBox);
-        }
-
+            Dock = DockStyle.Fill,
+            BackColor = Color.AliceBlue,
+            
+        };
     }
 }
