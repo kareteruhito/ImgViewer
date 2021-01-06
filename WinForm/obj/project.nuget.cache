@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "8MPhfZgEPLqv3gHFiAWiJBCEmta6eX0FZu0a0azhsOLKCu3//zBsXka9tXykZ3c033FkUN42uCk1qh4NIC+EMg==",
+  "dgSpecHash": "1Cw5vIrN1PaGwtE3xbMf929B6oohPEV1p6/iiZi+8SqLq9bGKuBxtNm+6zCtXGQIi9tAzfZDQ+AaDFRjzDJojg==",
   "success": true,
   "projectFilePath": "H:\\csharp\\dotnet5\\ImgViewer\\WinForm\\WinForm.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\PC01114\\.nuget\\packages\\microsoft.netcore.platforms\\5.0.0\\microsoft.netcore.platforms.5.0.0.nupkg.sha512",
+    "C:\\Users\\PC01114\\.nuget\\packages\\microsoft.win32.systemevents\\5.0.0\\microsoft.win32.systemevents.5.0.0.nupkg.sha512",
+    "C:\\Users\\PC01114\\.nuget\\packages\\system.drawing.common\\5.0.0\\system.drawing.common.5.0.0.nupkg.sha512"
+  ],
   "logs": []
 }

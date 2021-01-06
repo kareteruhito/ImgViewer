@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "EXTLATYQ26bTXYDbigQkVRx9llwGathegWR2Z94lURg8zUmJFnvnfPn6OlXNIdcMIIlRwGRRuLufkUhxxaX+YA==",
+  "dgSpecHash": "pEyrYusqqlKhFj1/1qiGtYu6YnWLFBM+TKtGe5P9Vm+GU3V8lGDAfMKx3ALvvfKmarNmGY7dtwn5nZQZM7g+qg==",
   "success": true,
   "projectFilePath": "H:\\csharp\\dotnet5\\ImgViewer\\Models\\Models.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\PC01114\\.nuget\\packages\\microsoft.netcore.platforms\\5.0.0\\microsoft.netcore.platforms.5.0.0.nupkg.sha512",
+    "C:\\Users\\PC01114\\.nuget\\packages\\microsoft.win32.systemevents\\5.0.0\\microsoft.win32.systemevents.5.0.0.nupkg.sha512",
+    "C:\\Users\\PC01114\\.nuget\\packages\\system.drawing.common\\5.0.0\\system.drawing.common.5.0.0.nupkg.sha512"
+  ],
   "logs": []
 }
