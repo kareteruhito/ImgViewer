@@ -1,4 +1,4 @@
-namespace Models
+namespace ImgViewer.Models
 {
     public class SingleView : IBookShelf
     {

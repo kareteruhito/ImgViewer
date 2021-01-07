@@ -1,7 +1,7 @@
 
 using System.Collections.Generic;
 
-namespace Models
+namespace ImgViewer.Models
 {
     public class ViewModeSwitcher
     {

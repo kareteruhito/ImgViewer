@@ -2,7 +2,7 @@ using System;
 using Xunit;
 using Xunit.Abstractions;
 
-using Models;
+using ImgViewer.Models;
 
 namespace ImgViewer.ModelsTest
 {
@@ -60,6 +60,27 @@ namespace ImgViewer.ModelsTest
                 output.WriteLine("{0}:{1}", className, sw.GetLabel(className));
             }
             Assert.True(true);
+        }
+        [Fact]
+        public void Test4()
+        {
+            const string path = @"C:\Users\PC01114\Pictures";
+
+            var book = new Book();
+            book.Path = path;
+            output.WriteLine("{0}", book.Path);
+
+            Assert.True(book.Path == path);
+
+            Assert.False(book.Any());
+
+            Assert.True(book.Count == 0);
+
+            Assert.False(book.IsLast());
+            Assert.False(book.IsFirst());
+            Assert.False(book.MoveNext());
+            Assert.False(book.MovePrevious());
+            Assert.True(book.FileName == "");
         }
     }
 }

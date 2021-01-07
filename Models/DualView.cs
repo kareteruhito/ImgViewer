@@ -1,6 +1,6 @@
 using System.Reflection.Metadata;
 
-namespace Models
+namespace ImgViewer.Models
 {
     public class DualView : IBookShelf
     {
