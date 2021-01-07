@@ -5,6 +5,6 @@ namespace Models
         string GetClassName();
         void SetPath(string path);
         string GetPath();
-         
+        string GetLabel();
     }
 }

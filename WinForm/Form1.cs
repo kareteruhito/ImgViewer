@@ -12,11 +12,16 @@ namespace ImgViewer.WinForm
 {
     public partial class Form1 : Form
     {
+
         public Form1()
         {
             InitializeComponent();
 
-            Controls.Add(_pictureBox);
+            InitializePictureBox();
+
+            InitializeMenuBar();
+
+            InitializeFullScreen();
         }
 
     }

@@ -32,5 +32,16 @@ namespace Models
         {
             return _current;
         }
+        public IEnumerable<string> GetClassName()
+        {
+            foreach (var (key, val) in _viewModes)
+            {
+                yield return key;
+            }
+        }
+        public string GetLabel(string className)
+        {
+            return _viewModes[className].GetLabel();
+        }
     }
 }

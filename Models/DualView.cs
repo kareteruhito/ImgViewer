@@ -1,7 +1,10 @@
+using System.Reflection.Metadata;
+
 namespace Models
 {
     public class DualView : IBookShelf
     {
+        const string _label = "見開き表示";
         IBookShelf _bookShelf;
         public DualView(IBookShelf bookShelf)
         {
@@ -18,6 +21,10 @@ namespace Models
         public string GetPath()
         {
             return _bookShelf.GetPath();
+        }
+        public string GetLabel()
+        {
+            return _label;
         }
     }
 }

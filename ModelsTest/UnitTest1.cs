@@ -40,7 +40,26 @@ namespace ImgViewer.ModelsTest
             Assert.True(mode.GetClassName() == modeName);
 
             output.WriteLine("{0}", mode.GetPath());
-            Assert.True(mode.GetPath() == path);
+            Assert.True(mode.GetPath() == path);            
+
+        }
+        [Fact]
+        public void Test2()
+        {
+            output.WriteLine("{0}", typeof(SingleView).Name);
+            Assert.True(typeof(SingleView).Name == nameof(SingleView));
+
+        }
+        [Fact]
+        public void Test3()
+        {
+            const string path = @".\dummy.txt";
+            var sw = ViewModeSwitcher.Create(path);
+            foreach (var className in sw.GetClassName())
+            {
+                output.WriteLine("{0}:{1}", className, sw.GetLabel(className));
+            }
+            Assert.True(true);
         }
     }
 }

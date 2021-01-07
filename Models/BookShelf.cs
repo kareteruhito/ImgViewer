@@ -2,6 +2,7 @@ namespace Models
 {
     public class BookShelf : IBookShelf
     {
+        const string _label = "本棚";
         string _path;
         public BookShelf(){}
         public string GetClassName()
@@ -15,6 +16,10 @@ namespace Models
         public string GetPath()
         {
             return _path;
+        }
+        public string GetLabel()
+        {
+            return _label;
         }
     }
 }
