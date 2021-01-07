@@ -81,6 +81,8 @@ namespace ImgViewer.ModelsTest
             Assert.False(book.MoveNext());
             Assert.False(book.MovePrevious());
             Assert.True(book.FileName == "");
+            Assert.False(book.MoveLast());
+            Assert.False(book.MoveFirst());
         }
     }
 }
