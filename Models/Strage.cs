@@ -64,6 +64,26 @@ namespace ImgViewer.Models
                 }
             }
         }
+<<<<<<< HEAD
+=======
+        public static List<string> GetBookEntries(string dir)
+        {
+            List<string> result = new List<string>();
+
+            if (GetEntriesFromDir(dir).Any())
+            {
+                result.Add(dir);
+            }
+            
+            var r = Directory.EnumerateFileSystemEntries(dir)
+                .Where(x => (IsZipFile(x) && GetEntriesFromZip(x).Any()) || (Directory.Exists(x) && GetEntriesFromDir(x).Any()))
+                .OrderBy(x => x)
+                .ToList<string>();
+            result.AddRange(r);
+            
+            return result;
+        }
+>>>>>>> 69faeb6156a527972c7f01b02dc1a1f63160bfa6
     }
 }
 

@@ -18,15 +18,16 @@ namespace ImgViewer.ModelsTest
         [Fact]
         public void Test1()
         {
-            string path = @".\dummy.txt";
-            var sw = ViewModeSwitcher.Create(path);
+            const string path = @".\data\data.zip";
+            
 
-            var mode = sw.CurrentMode();
-            var modeName = "SingleView";
+            IBook book = new Book(path);
+            output.WriteLine("{0}", book.GetParent());
 
-            output.WriteLine("{0}", mode.GetClassName());
-            Assert.True(mode.GetClassName() == modeName);
+            book = new ZipBook(path);
+            output.WriteLine("{0}", book.GetParent());
 
+<<<<<<< HEAD
             output.WriteLine("{0}", mode.GetPath());
             Assert.True(mode.GetPath() == path);
 
@@ -83,6 +84,9 @@ namespace ImgViewer.ModelsTest
             Assert.True(book.FileName == "");
             Assert.False(book.MoveLast());
             Assert.False(book.MoveFirst());
+=======
+            Assert.True(false);
+>>>>>>> 69faeb6156a527972c7f01b02dc1a1f63160bfa6
         }
     }
 }

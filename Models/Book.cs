@@ -1,80 +1,123 @@
-using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 
 namespace ImgViewer.Models
 {
-    public class Book
+    public class Book : IBook
     {
-        string _path = "";
-        List<string> _files = new List<string>();
-        public int Index {get; set;} = -1;
+        protected string _parent;
 
-        public Book()
-        {
+        protected List<string> _files;
 
-        }
-        public virtual string Path
+        protected int _index;
+
+        protected Book()
         {
-            get
-            {
-                return _path;
-            }
-            set
-            {
-                _files.Clear();
-                Index = -1;
-                _path = value;
-            }
+            _parent = "";
+            _files = new List<string>();
+            _index = -1;
         }
-        public int Count
+        public Book(string path)
         {
-            get
+            _parent = path;
+
+            string dir = "";
+            if (File.Exists(path))
             {
-                return _files.Count;
+                dir = Path.GetDirectoryName(path);
+                _files = Strage.GetEntriesFromDir(dir);
+                if (MoveAt(path) == false)
+                {
+                    if (Any()) _index = 0;    
+                }
             }
+            else
+            {
+                dir = path;
+                _files = Strage.GetEntriesFromDir(dir);
+                if (Any()) _index = 0;
+            }
+
+
         }
         public bool Any()
         {
             return _files.Any();
         }
-        
+        public int Count()
+        {
+            return _files.Count;
+        }
+
+        public string GetParent()
+        {
+            return _parent;
+        }
+        public Bitmap GetPage()
+        {
+            if (Any() == false) return null;
+
+            return Strage.LoadBitmapFromDir(_files[_index]);
+        }
+
         public bool IsFirst()
         {
             if (Any() == false) return false;
-            return Index == 0;
+
+            return _index == 0;
         }
+
         public bool IsLast()
         {
             if (Any() == false) return false;
-            return Index == Count - 1;
+
+            return _index == Count() - 1;
         }
+
+        public bool MoveAt(string path)
+        {
+            if (Any() == false) return false;
+
+            _index = _files.IndexOf(path);
+
+            return _index > - 1;
+        }
+
+        public bool MoveFirst()
+        {
+            if (Any() == false) return false;
+
+            _index = 0;
+            return true;
+        }
+
+        public bool MoveLast()
+        {
+            if (Any() == false) return false;
+
+            _index = Count() - 1;
+            return true;
+        }
+
         public bool MoveNext()
         {
             if (Any() == false) return false;
             if (IsLast()) return false;
 
-            Index++;
-
+            _index++;
             return true;
         }
+
         public bool MovePrevious()
         {
             if (Any() == false) return false;
             if (IsFirst()) return false;
 
-            Index--;
-
+            _index--;
             return true;
-        }
-
-        public string FileName
-        {
-            get
-            {
-                if (Any() == false) return "";
-                return _files[Index];
-            }
         }
         public bool MoveLast()
         {
