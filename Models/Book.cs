@@ -119,23 +119,5 @@ namespace ImgViewer.Models
             _index--;
             return true;
         }
-        public bool MoveLast()
-        {
-            if (Any() == false) return false;
-            if (IsLast()) return true;
-
-            Index = Count - 1;
-
-            return true;
-        }
-        public bool MoveFirst()
-        {
-            if (Any() == false) return false;
-            if (IsFirst()) return true;
-
-            Index = 0;
-
-            return true;
-        }
     }
 }

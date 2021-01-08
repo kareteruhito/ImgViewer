@@ -64,8 +64,6 @@ namespace ImgViewer.Models
                 }
             }
         }
-<<<<<<< HEAD
-=======
         public static List<string> GetBookEntries(string dir)
         {
             List<string> result = new List<string>();
@@ -83,7 +81,6 @@ namespace ImgViewer.Models
             
             return result;
         }
->>>>>>> 69faeb6156a527972c7f01b02dc1a1f63160bfa6
     }
 }
 

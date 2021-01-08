@@ -27,66 +27,7 @@ namespace ImgViewer.ModelsTest
             book = new ZipBook(path);
             output.WriteLine("{0}", book.GetParent());
 
-<<<<<<< HEAD
-            output.WriteLine("{0}", mode.GetPath());
-            Assert.True(mode.GetPath() == path);
-
-            path = @".\Foobar.txt";
-            mode.SetPath(path);
-
-            modeName = "DualView";
-            mode = sw.ChangeMode(modeName);
-
-            output.WriteLine("{0}", mode.GetClassName());
-            Assert.True(mode.GetClassName() == modeName);
-
-            output.WriteLine("{0}", mode.GetPath());
-            Assert.True(mode.GetPath() == path);            
-
-        }
-        [Fact]
-        public void Test2()
-        {
-            output.WriteLine("{0}", typeof(SingleView).Name);
-            Assert.True(typeof(SingleView).Name == nameof(SingleView));
-
-        }
-        [Fact]
-        public void Test3()
-        {
-            const string path = @".\dummy.txt";
-            var sw = ViewModeSwitcher.Create(path);
-            foreach (var className in sw.GetClassName())
-            {
-                output.WriteLine("{0}:{1}", className, sw.GetLabel(className));
-            }
-            Assert.True(true);
-        }
-        [Fact]
-        public void Test4()
-        {
-            const string path = @"C:\Users\PC01114\Pictures";
-
-            var book = new Book();
-            book.Path = path;
-            output.WriteLine("{0}", book.Path);
-
-            Assert.True(book.Path == path);
-
-            Assert.False(book.Any());
-
-            Assert.True(book.Count == 0);
-
-            Assert.False(book.IsLast());
-            Assert.False(book.IsFirst());
-            Assert.False(book.MoveNext());
-            Assert.False(book.MovePrevious());
-            Assert.True(book.FileName == "");
-            Assert.False(book.MoveLast());
-            Assert.False(book.MoveFirst());
-=======
             Assert.True(false);
->>>>>>> 69faeb6156a527972c7f01b02dc1a1f63160bfa6
         }
     }
 }
