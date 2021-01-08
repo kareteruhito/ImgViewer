@@ -19,8 +19,13 @@ namespace ImgViewer.ModelsTest
         public void Test1()
         {
             const string path = @".\data\data.zip";
+            
 
-            var book = new PathList();
+            IBook book = new Book(path);
+            output.WriteLine("{0}", book.GetParent());
+
+            book = new ZipBook(path);
+            output.WriteLine("{0}", book.GetParent());
 
             Assert.True(false);
         }

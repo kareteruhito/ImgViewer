@@ -67,8 +67,12 @@ namespace ImgViewer.Models
         public static List<string> GetBookEntries(string dir)
         {
             List<string> result = new List<string>();
-            result.Add(dir);
 
+            if (GetEntriesFromDir(dir).Any())
+            {
+                result.Add(dir);
+            }
+            
             var r = Directory.EnumerateFileSystemEntries(dir)
                 .Where(x => (IsZipFile(x) && GetEntriesFromZip(x).Any()) || (Directory.Exists(x) && GetEntriesFromDir(x).Any()))
                 .OrderBy(x => x)
