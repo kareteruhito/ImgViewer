@@ -39,6 +39,9 @@ namespace ImgViewer.WinForm
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
                     Text = "Open:" + dialog.FileName; // ※
+                    _book = new BookShelf(dialog.FileName);
+                    _pictureBox.Image.Dispose();
+                    _pictureBox.Image = _book.GetPage();
                 }
             };
             item.DropDownItems.Add(subItem);

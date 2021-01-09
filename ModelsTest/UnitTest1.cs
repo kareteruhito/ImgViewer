@@ -20,14 +20,38 @@ namespace ImgViewer.ModelsTest
         {
             const string path = @".\data\data.zip";
             
+            IBook book = BookMaker.Create(path);
+            output.WriteLine("{0} Page:{1}", book.GetParent(), book.Count());
 
-            IBook book = new Book(path);
-            output.WriteLine("{0}", book.GetParent());
+            Assert.True(true);
+        }
+        [Fact]
+        public void Test2()
+        {
+            const string path = @".\data\data.zip";
+            
+            IBook book = new BookShelf(path);
+            output.WriteLine("Parent:{0} Page:{1} Name:{2}", book.GetParent(), book.Count(), book.GetName());
+            foreach(var x in book.GetEntries())
+            {
+                output.WriteLine("{0}", x);
+            }
+            Assert.True(true);
+        }
+        [Fact]
+        public void Test3()
+        {
+            //const string path = @"H:\Pictures\inzip\202009181047.zip";
+            const string path = @"H:\Pictures\202004301613.PNG";
 
-            book = new ZipBook(path);
-            output.WriteLine("{0}", book.GetParent());
+            IBook book = BookMaker.Create(path);
+            output.WriteLine("Parent:{0} Page:{1} Name:{2}", book.GetParent(), book.Count(), book.GetName());
+            book = new BookShelf(path);
+            output.WriteLine("Parent:{0} Page:{1} Name:{2}", book.GetParent(), book.Count(), book.GetName());
+
 
             Assert.True(false);
+
         }
     }
 }

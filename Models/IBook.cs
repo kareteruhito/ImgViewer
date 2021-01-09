@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace ImgViewer.Models
@@ -16,6 +17,7 @@ namespace ImgViewer.Models
         bool MoveFirst();
         bool MoveLast();
         bool MoveAt(string path);
-
+        IEnumerable<string> GetEntries();
+        string GetName();
     }
 }

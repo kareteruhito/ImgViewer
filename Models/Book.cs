@@ -14,7 +14,7 @@ namespace ImgViewer.Models
 
         protected int _index;
 
-        protected Book()
+        public Book()
         {
             _parent = "";
             _files = new List<string>();
@@ -22,13 +22,11 @@ namespace ImgViewer.Models
         }
         public Book(string path)
         {
-            _parent = path;
 
-            string dir = "";
             if (File.Exists(path))
             {
-                dir = Path.GetDirectoryName(path);
-                _files = Strage.GetEntriesFromDir(dir);
+                _parent = Path.GetDirectoryName(path);
+                _files = Strage.GetEntriesFromDir(_parent);
                 if (MoveAt(path) == false)
                 {
                     if (Any()) _index = 0;    
@@ -36,8 +34,8 @@ namespace ImgViewer.Models
             }
             else
             {
-                dir = path;
-                _files = Strage.GetEntriesFromDir(dir);
+                _parent = path;
+                _files = Strage.GetEntriesFromDir(_parent);
                 if (Any()) _index = 0;
             }
 
@@ -56,9 +54,9 @@ namespace ImgViewer.Models
         {
             return _parent;
         }
-        public Bitmap GetPage()
+        public virtual Bitmap GetPage()
         {
-            if (Any() == false) return null;
+            if (Any() == false) return new Bitmap(1, 1);
 
             return Strage.LoadBitmapFromDir(_files[_index]);
         }
@@ -86,7 +84,7 @@ namespace ImgViewer.Models
             return _index > - 1;
         }
 
-        public bool MoveFirst()
+        public virtual bool MoveFirst()
         {
             if (Any() == false) return false;
 
@@ -94,7 +92,7 @@ namespace ImgViewer.Models
             return true;
         }
 
-        public bool MoveLast()
+        public virtual bool MoveLast()
         {
             if (Any() == false) return false;
 
@@ -102,7 +100,7 @@ namespace ImgViewer.Models
             return true;
         }
 
-        public bool MoveNext()
+        public virtual bool MoveNext()
         {
             if (Any() == false) return false;
             if (IsLast()) return false;
@@ -111,7 +109,7 @@ namespace ImgViewer.Models
             return true;
         }
 
-        public bool MovePrevious()
+        public virtual bool MovePrevious()
         {
             if (Any() == false) return false;
             if (IsFirst()) return false;
@@ -119,5 +117,18 @@ namespace ImgViewer.Models
             _index--;
             return true;
         }
+        public IEnumerable<string> GetEntries()
+        {
+            foreach(var x in _files)
+            {
+                yield return x;
+            }
+        }
+        public string GetName()
+        {
+            if (Any()==false) return "";
+            return _files[_index];
+        }
+
     }
 }

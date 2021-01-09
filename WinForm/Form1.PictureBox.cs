@@ -9,10 +9,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using ImgViewer.Models;
+
 namespace ImgViewer.WinForm
 {
     public partial class Form1
     {
+        IBook _book = new BookShelf();
+
         PictureBox _pictureBox = new PictureBox
         {
             Dock = DockStyle.Fill,
@@ -28,9 +32,19 @@ namespace ImgViewer.WinForm
             {
                 case MouseButtons.Left:
                     Text = nameof(MouseButtons.Left); // ※
+                    if (_book.MoveNext())
+                    {
+                        _pictureBox.Image.Dispose();
+                        _pictureBox.Image = _book.GetPage();
+                    }
                     break;
                 case MouseButtons.Right:
                     Text = nameof(MouseButtons.Right); // ※
+                    if (_book.MovePrevious())
+                    {
+                        _pictureBox.Image.Dispose();
+                        _pictureBox.Image = _book.GetPage();
+                    }
                     break;
                 default:
                     Text = ""; // ※
@@ -50,6 +64,9 @@ namespace ImgViewer.WinForm
             if (files.Any() == false) return;
 
             Text = "DD:" + files[0]; // ※
+            _book = new BookShelf(files[0]);
+            _pictureBox.Image.Dispose();
+            _pictureBox.Image = _book.GetPage();            
         }
         void InitializePictureBox()
         {
@@ -58,6 +75,18 @@ namespace ImgViewer.WinForm
             _pictureBox.DragDrop += PictureBox_DragDrop;
 
             Controls.Add(_pictureBox);
+
+            string[] args = Environment.GetCommandLineArgs();
+            if (args.Count() > 1)
+            {
+                _book = new BookShelf(args[1]);
+                _pictureBox.Image = _book.GetPage();
+            }
+            else
+            {
+                _pictureBox.Image = new Bitmap(1, 1);
+            }
+
         }
     }
 }
