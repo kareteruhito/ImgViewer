@@ -39,7 +39,10 @@ namespace ImgViewer.WinForm
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
                     Text = "Open:" + dialog.FileName; // ※
-                    _book = new BookShelf(dialog.FileName);
+                    _book = new ViewSwitcher(dialog.FileName);
+
+                    _book.ChangeMode(nameof(SingleView));
+
                     _pictureBox.Image.Dispose();
                     _pictureBox.Image = _book.GetPage();
                 }
@@ -55,7 +58,50 @@ namespace ImgViewer.WinForm
 
             _menuBar.Items.Add(item);
 
+            item = new ToolStripMenuItem();
+            item.Name = "View";
+            item.Text = "表示";
+
+            subItem = new ToolStripMenuItem();
+            subItem.Name = "Single";
+            subItem.Text = "単ページ表示";
+            subItem.Click += (o, e) =>
+            {
+                _book.ChangeMode(nameof(SingleView));
+                _pictureBox.Image.Dispose();
+                _pictureBox.Image = _book.GetPage();
+            };
+            item.DropDownItems.Add(subItem);
+
+            subItem = new ToolStripMenuItem();
+            subItem.Name = "Dual";
+            subItem.Text = "見開き表示";
+            subItem.Click += (o, e) =>
+            {
+                _book.ChangeMode(nameof(DualView));
+                _pictureBox.Image.Dispose();
+                _pictureBox.Image = _book.GetPage();
+            };
+            item.DropDownItems.Add(subItem);
+
+            subItem = new ToolStripMenuItem();
+            subItem.Name = "Square";
+            subItem.Text = "正方形表示";
+            subItem.Click += (o, e) =>
+            {
+                _book.ChangeMode(nameof(SquareView));
+                _pictureBox.Image.Dispose();
+                _pictureBox.Image = _book.GetPage();
+            };
+            item.DropDownItems.Add(subItem);
+
+            _menuBar.Items.Add(item);
+
             Controls.Add(_menuBar);
+        }
+        void HideMenu()
+        {
+            _menuBar.Visible = _menuBar.Visible ? false : true;
         }
     }
 }

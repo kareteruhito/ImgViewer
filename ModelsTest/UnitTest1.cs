@@ -28,7 +28,7 @@ namespace ImgViewer.ModelsTest
         [Fact]
         public void Test2()
         {
-            const string path = @".\data\data.zip";
+            const string path = @"C:\Users\asagao\Documents\vm\新しいフォルダー (11)\02マネージャ.zip";
             
             IBook book = new BookShelf(path);
             output.WriteLine("Parent:{0} Page:{1} Name:{2}", book.GetParent(), book.Count(), book.GetName());
@@ -36,7 +36,7 @@ namespace ImgViewer.ModelsTest
             {
                 output.WriteLine("{0}", x);
             }
-            Assert.True(true);
+            Assert.True(false);
         }
         [Fact]
         public void Test3()

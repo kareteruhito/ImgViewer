@@ -15,13 +15,14 @@ namespace ImgViewer.WinForm
 {
     public partial class Form1
     {
-        IBook _book = new BookShelf();
+        ViewSwitcher _book = new ViewSwitcher();
 
         PictureBox _pictureBox = new PictureBox
         {
             Dock = DockStyle.Fill,
             BackColor = Color.AliceBlue,
             AllowDrop = true,
+            SizeMode = PictureBoxSizeMode.Zoom,
         };
 
         void PictureBox_MouseDown(Object o, MouseEventArgs e)
@@ -64,7 +65,7 @@ namespace ImgViewer.WinForm
             if (files.Any() == false) return;
 
             Text = "DD:" + files[0]; // ※
-            _book = new BookShelf(files[0]);
+            _book = new ViewSwitcher(files[0]);
             _pictureBox.Image.Dispose();
             _pictureBox.Image = _book.GetPage();            
         }
@@ -79,7 +80,8 @@ namespace ImgViewer.WinForm
             string[] args = Environment.GetCommandLineArgs();
             if (args.Count() > 1)
             {
-                _book = new BookShelf(args[1]);
+                _book = new ViewSwitcher(args[1]);
+
                 _pictureBox.Image = _book.GetPage();
             }
             else

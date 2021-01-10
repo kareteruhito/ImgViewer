@@ -30,6 +30,7 @@ namespace ImgViewer.WinForm
                             FormBorderStyle = FormBorderStyle.None;
                             WindowState = FormWindowState.Maximized;
                         }
+                        HideMenu();
                         break;
                 }
             };

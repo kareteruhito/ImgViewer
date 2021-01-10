@@ -23,7 +23,7 @@ namespace ImgViewer.Models
                 _index = -1;
                 return;
             }
-            _index = _files.IndexOf(_parent);
+            _index = _files.IndexOf(path);
             if (_index > -1)
             {
                 _book = BookMaker.Create(path);

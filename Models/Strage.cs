@@ -16,7 +16,7 @@ namespace ImgViewer.Models
         {
             return Directory.EnumerateFiles(dir)
                 .Where(x => IsPictureFile(x))
-                .OrderBy(x => x)
+                .OrderBy(x => Path.GetFileNameWithoutExtension(x))
                 .ToList<string>();
         }
 
@@ -48,7 +48,7 @@ namespace ImgViewer.Models
                 return zip.Entries
                     .Where(x => IsPictureFile(x.FullName))
                     .Select(x => x.FullName)
-                    .OrderBy(x => x)
+                    .OrderBy(x => Path.GetFileNameWithoutExtension(x))
                     .ToList<string>();
             }
         }
@@ -75,7 +75,7 @@ namespace ImgViewer.Models
             
             var r = Directory.EnumerateFileSystemEntries(dir)
                 .Where(x => (IsZipFile(x) && GetEntriesFromZip(x).Any()) || (Directory.Exists(x) && GetEntriesFromDir(x).Any()))
-                .OrderBy(x => x)
+                .OrderBy(x => Path.GetFileNameWithoutExtension(x))
                 .ToList<string>();
             result.AddRange(r);
             
