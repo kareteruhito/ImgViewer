@@ -1,12 +1,17 @@
 ﻿using System;
+using System.Drawing;
 
-namespace Console
+namespace Models
 {
     class Program
     {
         static void Main(string[] args)
         {
-            System.Console.WriteLine("Hello World!");
+            Console.WriteLine("Hello World!");
+
+            var bmp = new Bitmap(1,1);
+
+            Console.WriteLine("{0}", bmp.Size);
         }
     }
 }
