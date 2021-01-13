@@ -9,20 +9,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-using ImgViewer.Models;
-
-namespace ImgViewer.WinForm
+namespace WinForm
 {
     public partial class Form1
     {
-        ViewSwitcher _book = new ViewSwitcher();
-
         PictureBox _pictureBox = new PictureBox
         {
             Dock = DockStyle.Fill,
             BackColor = Color.AliceBlue,
             AllowDrop = true,
-            SizeMode = PictureBoxSizeMode.Zoom,
+            SizeMode = PictureBoxSizeMode.Normal,
         };
 
         void PictureBox_MouseDown(Object o, MouseEventArgs e)
@@ -33,19 +29,9 @@ namespace ImgViewer.WinForm
             {
                 case MouseButtons.Left:
                     Text = nameof(MouseButtons.Left); // ※
-                    if (_book.MoveNext())
-                    {
-                        _pictureBox.Image.Dispose();
-                        _pictureBox.Image = _book.GetPage();
-                    }
                     break;
                 case MouseButtons.Right:
                     Text = nameof(MouseButtons.Right); // ※
-                    if (_book.MovePrevious())
-                    {
-                        _pictureBox.Image.Dispose();
-                        _pictureBox.Image = _book.GetPage();
-                    }
                     break;
                 default:
                     Text = ""; // ※
@@ -65,9 +51,11 @@ namespace ImgViewer.WinForm
             if (files.Any() == false) return;
 
             Text = "DD:" + files[0]; // ※
-            _book = new ViewSwitcher(files[0]);
-            _pictureBox.Image.Dispose();
-            _pictureBox.Image = _book.GetPage();            
+        }
+        
+        void SetCanvas(Bitmap canvas)
+        {
+            _pictureBox.Image = canvas;
         }
         void InitializePictureBox()
         {
@@ -78,11 +66,9 @@ namespace ImgViewer.WinForm
             Controls.Add(_pictureBox);
 
             string[] args = Environment.GetCommandLineArgs();
-            if (args.Count() > 1)
+            if (args.Length > 1)
             {
-                _book = new ViewSwitcher(args[1]);
-
-                _pictureBox.Image = _book.GetPage();
+                _pictureBox.Image = new Bitmap(1, 1);
             }
             else
             {

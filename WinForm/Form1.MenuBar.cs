@@ -7,9 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using ImgViewer.Models;
 
-namespace ImgViewer.WinForm
+namespace WinForm
 {
     public partial class Form1
     {
@@ -39,12 +38,6 @@ namespace ImgViewer.WinForm
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
                     Text = "Open:" + dialog.FileName; // ※
-                    _book = new ViewSwitcher(dialog.FileName);
-
-                    _book.ChangeMode(nameof(SingleView));
-
-                    _pictureBox.Image.Dispose();
-                    _pictureBox.Image = _book.GetPage();
                 }
             };
             item.DropDownItems.Add(subItem);
@@ -67,9 +60,6 @@ namespace ImgViewer.WinForm
             subItem.Text = "単ページ表示";
             subItem.Click += (o, e) =>
             {
-                _book.ChangeMode(nameof(SingleView));
-                _pictureBox.Image.Dispose();
-                _pictureBox.Image = _book.GetPage();
             };
             item.DropDownItems.Add(subItem);
 
@@ -78,9 +68,6 @@ namespace ImgViewer.WinForm
             subItem.Text = "見開き表示";
             subItem.Click += (o, e) =>
             {
-                _book.ChangeMode(nameof(DualView));
-                _pictureBox.Image.Dispose();
-                _pictureBox.Image = _book.GetPage();
             };
             item.DropDownItems.Add(subItem);
 
@@ -89,9 +76,6 @@ namespace ImgViewer.WinForm
             subItem.Text = "正方形表示";
             subItem.Click += (o, e) =>
             {
-                _book.ChangeMode(nameof(SquareView));
-                _pictureBox.Image.Dispose();
-                _pictureBox.Image = _book.GetPage();
             };
             item.DropDownItems.Add(subItem);
 

@@ -1,4 +1,4 @@
-﻿namespace ImgViewer.WinForm
+﻿namespace WinForm
 {
     partial class Form1
     {
