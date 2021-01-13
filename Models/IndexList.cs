@@ -90,5 +90,16 @@ namespace Models
                 return _list[Index];
             }
         }
+        public bool MoveAt(string value)
+        {
+            var i = _list.IndexOf(value);
+
+            if (i == _outrange)
+            {
+                return false;
+            }
+            Index = i;
+            return true;
+        }
     }
 }

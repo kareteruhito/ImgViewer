@@ -9,6 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using Models;
+
 namespace WinForm
 {
     public partial class Form1
@@ -18,8 +20,10 @@ namespace WinForm
             Dock = DockStyle.Fill,
             BackColor = Color.AliceBlue,
             AllowDrop = true,
-            SizeMode = PictureBoxSizeMode.Normal,
+            SizeMode = PictureBoxSizeMode.Zoom,
         };
+
+        Book _book = new Book();
 
         void PictureBox_MouseDown(Object o, MouseEventArgs e)
         {
@@ -29,9 +33,27 @@ namespace WinForm
             {
                 case MouseButtons.Left:
                     Text = nameof(MouseButtons.Left); // ※
+                    if(_book.MoveNext())
+                    {
+                        if (_pictureBox.Image != null)
+                        {
+                            _pictureBox.Image.Dispose();
+                            _pictureBox.Image = null;
+                        }
+                        _pictureBox.Image = _book.Page;
+                    }
                     break;
                 case MouseButtons.Right:
                     Text = nameof(MouseButtons.Right); // ※
+                    if(_book.MovePrevious())
+                    {
+                        if (_pictureBox.Image != null)
+                        {
+                            _pictureBox.Image.Dispose();
+                            _pictureBox.Image = null;
+                        }
+                        _pictureBox.Image = _book.Page;
+                    }
                     break;
                 default:
                     Text = ""; // ※
@@ -51,6 +73,16 @@ namespace WinForm
             if (files.Any() == false) return;
 
             Text = "DD:" + files[0]; // ※
+            _book = BookMaker.Create(files[0]);
+            if (_book.Any())
+            {
+                if (_pictureBox.Image != null)
+                {
+                    _pictureBox.Image.Dispose();
+                    _pictureBox.Image = null;
+                }
+                _pictureBox.Image = _book.Page;
+            }
         }
         
         void SetCanvas(Bitmap canvas)

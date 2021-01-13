@@ -13,9 +13,6 @@ namespace Models
 {
     public class Storage
     {
-        static Dictionary<string, Bitmap> _bmps = new Dictionary<string, Bitmap>();
-        static string _parent = "";
-
         public static List<string> GetEntriesFromDir(string dir)
         {
 
@@ -23,25 +20,7 @@ namespace Models
                 .Where(x => IsPictureFile(x))
                 .OrderBy(x => Path.GetFileNameWithoutExtension(x))
                 .ToList<string>();
-
-            if (_parent != dir)
-            {
-                _parent = dir;
-                Task.Run(() => {
-                    foreach(var bmp in _bmps.Values)
-                    {
-                        bmp.Dispose();
-                    }
-                    _bmps.Clear();
-
-                    foreach(var file in files)
-                    {
-                        using var fs = new FileStream(file, FileMode.Open, FileAccess.Read);
-                        _bmps.Add(file, new Bitmap(fs));
-                    }
-                });
-            }
-
+            
             return files;
         }
 
