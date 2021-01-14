@@ -12,7 +12,7 @@ namespace Models
         {
             var files = Storage.GetEntriesFromDir(path);
 
-            _list.AddRange(files);
+            AddRange(files);
             MoveFirst();
         }
         public virtual System.Drawing.Bitmap Page

@@ -48,7 +48,7 @@ namespace Models
                 }
             }
         }
-        public bool MoveNext()
+        public virtual bool MoveNext()
         {
             if (!Any()) return Any();
             if (IsLast) return !IsLast;
@@ -56,7 +56,7 @@ namespace Models
             Index++;
             return true;
         }
-        public bool MovePrevious()
+        public virtual bool MovePrevious()
         {
             if (!Any()) return Any();
             if (IsFirst) return !IsFirst;
@@ -64,7 +64,7 @@ namespace Models
             Index--;
             return true;
         }
-        public bool MoveFirst()
+        public virtual bool MoveFirst()
         {
             if (!Any()) return Any();
             if (IsFirst) return !IsFirst;
@@ -72,7 +72,7 @@ namespace Models
             Index = First;
             return IsFirst;
         }
-        public bool MoveLast()
+        public virtual bool MoveLast()
         {
             if (!Any()) return Any();
             if (IsLast) return !IsLast;
@@ -90,7 +90,7 @@ namespace Models
                 return _list[Index];
             }
         }
-        public bool MoveAt(string value)
+        public virtual bool MoveAt(string value)
         {
             var i = _list.IndexOf(value);
 

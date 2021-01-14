@@ -23,7 +23,7 @@ namespace WinForm
             SizeMode = PictureBoxSizeMode.Zoom,
         };
 
-        Book _book = new Book();
+        BookShelf _bookShelf = new BookShelf();
 
         void PictureBox_MouseDown(Object o, MouseEventArgs e)
         {
@@ -33,26 +33,72 @@ namespace WinForm
             {
                 case MouseButtons.Left:
                     Text = nameof(MouseButtons.Left); // ※
-                    if(_book.MoveNext())
+                    if (_bookShelf.Any() == false) return;
+
+                    var book = _bookShelf.GetBook();
+                    if (book.Any() == false) return;
+
+                    if (_bookShelf.IsLast && book.IsLast) return;
+
+                    if (book.IsLast)
+                    {
+                        if (_bookShelf.MoveNext())
+                        {
+                            book = _bookShelf.GetBook();
+                            if (_pictureBox.Image != null)
+                            {
+                                _pictureBox.Image.Dispose();
+                                _pictureBox.Image = null;
+                            }
+                            _pictureBox.Image = book.Page;
+                        }
+                        return;
+                    }
+
+                    if(book.MoveNext())
                     {
                         if (_pictureBox.Image != null)
                         {
                             _pictureBox.Image.Dispose();
                             _pictureBox.Image = null;
                         }
-                        _pictureBox.Image = _book.Page;
+                        _pictureBox.Image = book.Page;
                     }
                     break;
                 case MouseButtons.Right:
                     Text = nameof(MouseButtons.Right); // ※
-                    if(_book.MovePrevious())
+                    if (_bookShelf.Any() == false) return;
+
+                    book = _bookShelf.GetBook();
+                    if (book.Any() == false) return;
+
+                    if (_bookShelf.IsFirst && book.IsFirst) return;
+
+                    if (book.IsFirst)
+                    {
+                        if (_bookShelf.MovePrevious())
+                        {
+                            book = _bookShelf.GetBook();
+                            book.MoveLast();
+                            
+                            if (_pictureBox.Image != null)
+                            {
+                                _pictureBox.Image.Dispose();
+                                _pictureBox.Image = null;
+                            }
+                            _pictureBox.Image = book.Page;
+                        }
+                        return;
+                    }
+
+                    if(book.MovePrevious())
                     {
                         if (_pictureBox.Image != null)
                         {
                             _pictureBox.Image.Dispose();
                             _pictureBox.Image = null;
                         }
-                        _pictureBox.Image = _book.Page;
+                        _pictureBox.Image = book.Page;
                     }
                     break;
                 default:
@@ -73,16 +119,18 @@ namespace WinForm
             if (files.Any() == false) return;
 
             Text = "DD:" + files[0]; // ※
-            _book = BookMaker.Create(files[0]);
-            if (_book.Any())
+            _bookShelf = new BookShelf(files[0]);
+            if (_bookShelf.Any() == false) return;
+
+            var book = _bookShelf.GetBook();
+            if (book.Any() == false) return;
+
+            if (_pictureBox.Image != null)
             {
-                if (_pictureBox.Image != null)
-                {
-                    _pictureBox.Image.Dispose();
-                    _pictureBox.Image = null;
-                }
-                _pictureBox.Image = _book.Page;
+                _pictureBox.Image.Dispose();
+                _pictureBox.Image = null;
             }
+            _pictureBox.Image = book.Page;
         }
         
         void SetCanvas(Bitmap canvas)

@@ -42,15 +42,16 @@ namespace Test
             }
 
             var str2 = "";
-            indexList.MoveFirst();
-            do
+            if (indexList.Any())
             {
-                str2 = str2 + indexList.Value;
-            } while (indexList.MoveNext());
+                indexList.MoveFirst();
+                do {
+                    str2 = str2 + indexList.Value;
+                } while (indexList.MoveNext());
+            }
 
             output.WriteLine("str1:{0} str2:{1}", str1, str2);
             Assert.True(str1 == str2);
         }
-
     }
 }

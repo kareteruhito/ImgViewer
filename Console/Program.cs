@@ -9,9 +9,17 @@ namespace Models
         {
             Console.WriteLine("Hello World!");
 
-            var bmp = new Bitmap(1,1);
+            var bookShelf = new BookShelf(@"H:\csharp\dotnet5\ImgViewer\data\data2.zip");
 
-            Console.WriteLine("{0}", bmp.Size);
+            if (bookShelf.Any())
+            {
+                Console.WriteLine("current:{0}", bookShelf.Value);
+                Console.WriteLine("----");
+                foreach(var v in bookShelf.Entries)
+                {
+                    Console.WriteLine("{0}", v);
+                }
+            }
         }
     }
 }
