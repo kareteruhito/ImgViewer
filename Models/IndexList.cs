@@ -7,12 +7,12 @@ using System.Xml.Serialization;
 
 namespace Models
 {
-    public class IndexList
+    public class IndexList<T>
     {
         public IndexList() {}
         protected const int _outrange = -1;
         public int Index {get; protected set;} = _outrange;
-        protected List<string> _list = new List<string>();
+        protected List<T> _list = new();
 
         public bool Any() => _list.Any();
 
@@ -24,21 +24,21 @@ namespace Models
         public bool IsFirst { get => Index == First; }
         public bool IsLast { get => Index == Last; }
 
-        public void Add(string str)
+        public void Add(T param)
         {
-            _list.Add(str);
+            _list.Add(param);
             
             if (Index == _outrange && Any()) Index = First;
         }
         
-        public void AddRange(IEnumerable<string> list)
+        public void AddRange(IEnumerable<T> param)
         {
-            _list.AddRange(list);
+            _list.AddRange(param);
 
             if (Index == _outrange && Any()) Index = First;
         }
 
-        public IEnumerable<string> Entries
+        public IEnumerable<T> Entries
         {
             get
             {
@@ -80,19 +80,19 @@ namespace Models
             Index = Last;
             return IsLast;
         }
-        public string Value
+        public T Value
         {
             get
             {
-                if (!Any()) return null;
-                if (Index == _outrange) return null;
+                if (!Any()) return default;
+                if (Index == _outrange) return default;
 
                 return _list[Index];
             }
         }
-        public virtual bool MoveAt(string value)
+        public virtual bool MoveAt(T param)
         {
-            var i = _list.IndexOf(value);
+            var i = _list.IndexOf(param);
 
             if (i == _outrange)
             {

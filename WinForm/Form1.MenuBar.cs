@@ -60,6 +60,11 @@ namespace WinForm
             subItem.Text = "単ページ表示";
             subItem.Click += (o, e) =>
             {
+                _bookShelf.ViewMode = "SingleViewMode";
+                if (_bookShelf.Any())
+                {
+                    Canvas = _bookShelf.Page;                
+                }
             };
             item.DropDownItems.Add(subItem);
 
@@ -68,6 +73,11 @@ namespace WinForm
             subItem.Text = "見開き表示";
             subItem.Click += (o, e) =>
             {
+                _bookShelf.ViewMode = "DualViewMode";
+                if (_bookShelf.Any())
+                {
+                    Canvas = _bookShelf.Page;                
+                }
             };
             item.DropDownItems.Add(subItem);
 
@@ -76,6 +86,11 @@ namespace WinForm
             subItem.Text = "正方形表示";
             subItem.Click += (o, e) =>
             {
+                _bookShelf.ViewMode = "SquareViewMode";
+                if (_bookShelf.Any())
+                {
+                    Canvas = _bookShelf.Page;                
+                }
             };
             item.DropDownItems.Add(subItem);
 

@@ -4,14 +4,13 @@ namespace Models
 {
     public class ZipBook : Book
     {
-        string _parent = "";
         public ZipBook() : base()
         {
 
         }
         public ZipBook(string path) : base()
         {
-            _parent = path;
+            Parent = path;
 
             var files = Storage.GetEntriesFromZip(path);
 
@@ -24,7 +23,7 @@ namespace Models
             {
                 if (!Any()) return null;
 
-                return Storage.LoadBitmapFromZip(_parent, Value);
+                return Storage.LoadBitmapFromZip(Parent, Value);
             }
         }
     }

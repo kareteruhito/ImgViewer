@@ -3,11 +3,11 @@ using System.Drawing;
 
 namespace Models
 {
-    public class BookShelf : IndexList
+    public class BookShelf : IndexList<Book>
     {
+        string _viewMode = "SingleViewMode";
+        IBook _book;
         public string Parent { get; private set;}
-
-        Book _book;
 
         public BookShelf() : base()
         {
@@ -15,8 +15,6 @@ namespace Models
         }
         public BookShelf(string path) : base()
         {
-            _book = BookMaker.Create(path);
-
             if (File.Exists(path))
             {
                 Parent = Path.GetDirectoryName(path);
@@ -26,55 +24,103 @@ namespace Models
                 Parent = path;
             }
 
-            var bookFiles = Storage.GetBookEntries(Parent);
-            AddRange(bookFiles);
-
-            if (Any())
+            int counter = 0;
+            var entries = Storage.GetBookEntries(Parent);
+            if (Any()) Index = 0;
+            foreach(var entry in entries)
             {
-                if (MoveAt(path) == false)
-                {
-                    MoveAt(Parent);
-                }
+                Add(BookMaker.Create(entry));
+                if (entry == Parent) Index = counter;
+                if (entry == path) Index = counter;
+                
+                counter++;
             }
+
+            if (Storage.IsPictureFile(path))
+            {
+                Value.MoveAt(path);
+            }
+
+            _book = ViewModeSelector.Create(Value, ViewMode);
+        }
+        public bool MoveAt(string path)
+        {
+            if (Any() == false) return false;
+
+            int counter = 0;
+            foreach(var entry in Entries)
+            {
+                if (entry.Parent == path) Index = counter;
+                counter++;
+            }
+
+            _book = ViewModeSelector.Create(Value, ViewMode);
+            return true;
         }
         public override bool MoveNext()
         {
-            if (base.MoveNext() == false) return false;
-
-            _book = BookMaker.Create(Value);
-            return true;
+            if (Any() == false) return false;
+            
+            if (_book.IsLast)
+            {
+                if (base.MoveNext())
+                {
+                    _book = ViewModeSelector.Create(Value, ViewMode);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return _book.MoveNext();
+            }
         }
         public override bool MovePrevious()
         {
-            if (base.MovePrevious() == false) return false;
-
-            _book = BookMaker.Create(Value);
-            return true;
+            if (Any() == false) return false;
+            
+            if (_book.IsFirst)
+            {
+                if (base.MovePrevious())
+                {
+                    _book = ViewModeSelector.Create(Value, ViewMode);
+                    _book.MoveLast();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return _book.MovePrevious();
+            }
         }
-        public override bool MoveFirst()
+        public virtual System.Drawing.Bitmap Page
         {
-            if (base.MoveFirst() == false) return false;
-
-            _book = BookMaker.Create(Value);
-            return true;
+            get
+            {
+                return _book.Page;
+            }
         }
-        public override bool MoveLast()
+        public string ViewMode
         {
-            if (base.MoveLast() == false) return false;
-
-            _book = BookMaker.Create(Value);
-            return true;
+            set
+            {
+                _viewMode = value;
+                if (Any())
+                {
+                    _book = ViewModeSelector.Create(Value, ViewMode);
+                }
+            }
+            get
+            {
+                return _viewMode;
+            }
         }
-        public override bool MoveAt(string key)
-        {
-            if (base.MoveAt(key) == false) return false;
-
-            _book = BookMaker.Create(Value);
-            return true;
-        }
-        public Book GetBook()
-        {
-            return _book;
-        }
-    }
-}
+    } // class
+} // namespace

@@ -33,72 +33,16 @@ namespace WinForm
             {
                 case MouseButtons.Left:
                     Text = nameof(MouseButtons.Left); // ※
-                    if (_bookShelf.Any() == false) return;
-
-                    var book = _bookShelf.GetBook();
-                    if (book.Any() == false) return;
-
-                    if (_bookShelf.IsLast && book.IsLast) return;
-
-                    if (book.IsLast)
+                    if(_bookShelf.MoveNext())
                     {
-                        if (_bookShelf.MoveNext())
-                        {
-                            book = _bookShelf.GetBook();
-                            if (_pictureBox.Image != null)
-                            {
-                                _pictureBox.Image.Dispose();
-                                _pictureBox.Image = null;
-                            }
-                            _pictureBox.Image = book.Page;
-                        }
-                        return;
-                    }
-
-                    if(book.MoveNext())
-                    {
-                        if (_pictureBox.Image != null)
-                        {
-                            _pictureBox.Image.Dispose();
-                            _pictureBox.Image = null;
-                        }
-                        _pictureBox.Image = book.Page;
+                        Canvas = _bookShelf.Page;
                     }
                     break;
                 case MouseButtons.Right:
                     Text = nameof(MouseButtons.Right); // ※
-                    if (_bookShelf.Any() == false) return;
-
-                    book = _bookShelf.GetBook();
-                    if (book.Any() == false) return;
-
-                    if (_bookShelf.IsFirst && book.IsFirst) return;
-
-                    if (book.IsFirst)
+                    if(_bookShelf.MovePrevious())
                     {
-                        if (_bookShelf.MovePrevious())
-                        {
-                            book = _bookShelf.GetBook();
-                            book.MoveLast();
-                            
-                            if (_pictureBox.Image != null)
-                            {
-                                _pictureBox.Image.Dispose();
-                                _pictureBox.Image = null;
-                            }
-                            _pictureBox.Image = book.Page;
-                        }
-                        return;
-                    }
-
-                    if(book.MovePrevious())
-                    {
-                        if (_pictureBox.Image != null)
-                        {
-                            _pictureBox.Image.Dispose();
-                            _pictureBox.Image = null;
-                        }
-                        _pictureBox.Image = book.Page;
+                        Canvas = _bookShelf.Page;
                     }
                     break;
                 default:
@@ -120,22 +64,27 @@ namespace WinForm
 
             Text = "DD:" + files[0]; // ※
             _bookShelf = new BookShelf(files[0]);
-            if (_bookShelf.Any() == false) return;
-
-            var book = _bookShelf.GetBook();
-            if (book.Any() == false) return;
-
-            if (_pictureBox.Image != null)
+            if (_bookShelf.Any())
             {
-                _pictureBox.Image.Dispose();
-                _pictureBox.Image = null;
+                Canvas = _bookShelf.Page;                
             }
-            _pictureBox.Image = book.Page;
         }
         
-        void SetCanvas(Bitmap canvas)
+        private Image Canvas
         {
-            _pictureBox.Image = canvas;
+            get
+            {
+                return _pictureBox.Image;
+            }
+            set
+            {
+                if (_pictureBox.Image != null)
+                {
+                    _pictureBox.Image.Dispose();
+                    _pictureBox.Image = null;
+                }
+                _pictureBox.Image = value;
+            }
         }
         void InitializePictureBox()
         {
