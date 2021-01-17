@@ -38,6 +38,11 @@ namespace WinForm
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
                     Text = "Open:" + dialog.FileName; // ※
+                    _bookShelf = new Models.BookShelf(dialog.FileName);
+                    if (_bookShelf.Any())
+                    {
+                        Canvas = _bookShelf.Page;                
+                    }
                 }
             };
             item.DropDownItems.Add(subItem);

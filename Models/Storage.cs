@@ -13,15 +13,40 @@ namespace Models
 {
     public class Storage
     {
-        public static List<string> GetEntriesFromDir(string dir)
-        {
 
-            var files = Directory.EnumerateFiles(dir)
-                .Where(x => IsPictureFile(x))
-                .OrderBy(x => Path.GetFileNameWithoutExtension(x))
-                .ToList<string>();
+        static Dictionary<string, Bitmap> _cache = new Dictionary<string, Bitmap>();
+        public static Bitmap LoadBitmap(string fileName, string zipFile = "")
+        {
+            var key = fileName;
+            if (zipFile != "")
+            {
+                key = System.IO.Path.Join(zipFile, fileName);
+            }
+
+            if (_cache.ContainsKey(key) == false)
+            {
+                if (zipFile == "")
+                {
+                    _cache[key] = LoadBitmapFromDir(fileName);
+                }
+                else
+                {
+                    _cache[key] = LoadBitmapFromZip(zipFile, fileName);
+                }
+            }
             
-            return files;
+            return _cache[key];
+        }
+        public static Bitmap LoadBitmapFromZip(string zipFile, string fileName)
+        {
+            using(var zip = ZipFile.OpenRead(zipFile))
+            {
+                var entry = zip.GetEntry(fileName);
+                using (var fs = entry.Open())
+                {
+                    return new Bitmap(fs);
+                }
+            }
         }
 
         public static Bitmap LoadBitmapFromDir(string fileName)
@@ -45,6 +70,27 @@ namespace Models
             return Regex.IsMatch(path, pattern, RegexOptions.IgnoreCase);
         }
 
+        public static List<string> GetEntriesFromDir(string dir)
+        {
+
+            var files = Directory.EnumerateFiles(dir)
+                .Where(x => IsPictureFile(x))
+                .OrderBy(x => Path.GetFileNameWithoutExtension(x))
+                .ToList<string>();
+            
+            Task.Run(()=>{
+                foreach(var fileName in files)
+                {
+                    if (_cache.ContainsKey(fileName) == false)
+                    {
+                        _cache[fileName] = LoadBitmapFromDir(fileName);
+                    }
+                }
+            });
+            
+            return files;
+        }
+
         public static List<string> GetEntriesFromZip(string zipFile)
         {
             List<string> files;
@@ -58,20 +104,20 @@ namespace Models
                     .ToList<string>();
             }
 
+            Task.Run(()=>{
+                foreach(var fileName in files)
+                {
+                    var key = System.IO.Path.Join(zipFile, fileName);
+                    if (_cache.ContainsKey(key) == false)
+                    {
+                        _cache[key] = LoadBitmapFromZip(zipFile, fileName);
+                    }
+                }
+            });
+
             return files;
         }
 
-        public static Bitmap LoadBitmapFromZip(string zipFile, string fileName)
-        {
-            using(var zip = ZipFile.OpenRead(zipFile))
-            {
-                var entry = zip.GetEntry(fileName);
-                using (var fs = entry.Open())
-                {
-                    return new Bitmap(fs);
-                }
-            }
-        }
         public static List<string> GetBookEntries(string dir)
         {
             List<string> result = new List<string>();

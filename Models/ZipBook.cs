@@ -23,7 +23,8 @@ namespace Models
             {
                 if (!Any()) return null;
 
-                return Storage.LoadBitmapFromZip(Parent, Value);
+                //return Storage.LoadBitmapFromZip(Parent, Value);
+                return Storage.LoadBitmap(Value, Parent);
             }
         }
     }

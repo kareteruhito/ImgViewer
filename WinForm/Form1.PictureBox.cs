@@ -78,11 +78,13 @@ namespace WinForm
             }
             set
             {
+                /*
                 if (_pictureBox.Image != null)
                 {
                     _pictureBox.Image.Dispose();
                     _pictureBox.Image = null;
                 }
+                */
                 _pictureBox.Image = value;
             }
         }
@@ -97,7 +99,12 @@ namespace WinForm
             string[] args = Environment.GetCommandLineArgs();
             if (args.Length > 1)
             {
-                _pictureBox.Image = new Bitmap(1, 1);
+                //_pictureBox.Image = new Bitmap(1, 1);
+                _bookShelf = new BookShelf(args[1]);
+                if (_bookShelf.Any())
+                {
+                    Canvas = _bookShelf.Page;                
+                }
             }
             else
             {

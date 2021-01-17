@@ -55,8 +55,8 @@ namespace Models
                     var bmp2 = _book.Page;
                     var bmp3 = Graphic.JoinBitmap(bmp2, bmp1);
 
-                    bmp1.Dispose();
-                    bmp2.Dispose();
+                    //bmp1.Dispose();
+                    //bmp2.Dispose();
 
                     _book.MovePrevious();
 

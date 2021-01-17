@@ -25,7 +25,8 @@ namespace Models
             {
                 if (!Any()) return null;
 
-                return Storage.LoadBitmapFromDir(Value);
+                //return Storage.LoadBitmapFromDir(Value);
+                return Storage.LoadBitmap(Value);
             }
         }
     }

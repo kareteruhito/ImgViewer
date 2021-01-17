@@ -16,17 +16,17 @@ namespace Test
         [Fact]
         public void SimpleConstructTest()
         {
-            var indexList = new IndexList();
+            var indexList = new IndexList<string>();
 
             output.WriteLine("{0}", nameof(indexList));
             Assert.True(indexList != null);
-            Assert.True(indexList is IndexList);
+            Assert.True(indexList is IndexList<string>);
         }
 
         [Fact]
         public void IteratorTest()
         {
-            var indexList = new IndexList();
+            var indexList = new IndexList<string>();
 
             indexList.Add("A");
 
