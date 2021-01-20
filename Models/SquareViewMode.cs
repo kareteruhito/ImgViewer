@@ -19,7 +19,14 @@ namespace Models
                 return _book.IsFirst && _y == 0;
             }
         }
-        public bool IsLast { get => _book.IsLast; }
+        public bool IsLast
+        {
+            get
+            {
+                var bmp = _book.Page;
+                return _book.IsLast && Graphic.IsTailSquareBitmap(bmp, _y);
+            }
+        }
 
         public bool MoveNext()
         {
