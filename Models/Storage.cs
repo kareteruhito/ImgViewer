@@ -128,10 +128,24 @@ namespace Models
             }
             
             var r = Directory.EnumerateFileSystemEntries(dir)
+                .Where(x => (Directory.Exists(x) && GetEntriesFromDir(x).Any()))
+                .OrderBy(x => Path.GetFileNameWithoutExtension(x))
+                .ToList<string>();
+            result.AddRange(r);
+
+            r = Directory.EnumerateFileSystemEntries(dir)
+                .Where(x => (IsZipFile(x) && GetEntriesFromZip(x).Any()))
+                .OrderBy(x => Path.GetFileNameWithoutExtension(x))
+                .ToList<string>();
+            result.AddRange(r);
+
+            /*
+            var r = Directory.EnumerateFileSystemEntries(dir)
                 .Where(x => (IsZipFile(x) && GetEntriesFromZip(x).Any()) || (Directory.Exists(x) && GetEntriesFromDir(x).Any()))
                 .OrderBy(x => Path.GetFileNameWithoutExtension(x))
                 .ToList<string>();
             result.AddRange(r);
+            */
             
             return result;
         }
