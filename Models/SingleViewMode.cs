@@ -22,5 +22,6 @@ namespace Models
 
         public bool MoveFirst() => _book.MoveFirst();
         public bool MoveLast() => _book.MoveLast();
+        public string Parent { get => _book.Parent; }
     }
 }

@@ -9,6 +9,16 @@ namespace Models
         IBook _book;
         public string Parent { get; private set;}
 
+        public string BookPath
+        {
+            get
+            {
+                if (_book == null)  return "";
+
+                return _book.Parent;
+            }
+        }
+
         public BookShelf() : base()
         {
 

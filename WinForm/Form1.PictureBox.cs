@@ -32,21 +32,31 @@ namespace WinForm
             switch (e.Button)
             {
                 case MouseButtons.Left:
-                    Text = nameof(MouseButtons.Left); // ※
+                    // Text = nameof(MouseButtons.Left); // ※
                     if(_bookShelf.MoveNext())
                     {
                         Canvas = _bookShelf.Page;
+
+                        if (Text != _bookShelf.BookPath)
+                        {
+                            Text = _bookShelf.BookPath;
+                        }
                     }
                     break;
                 case MouseButtons.Right:
-                    Text = nameof(MouseButtons.Right); // ※
+                    // Text = nameof(MouseButtons.Right); // ※
                     if(_bookShelf.MovePrevious())
                     {
                         Canvas = _bookShelf.Page;
+
+                        if (Text != _bookShelf.BookPath)
+                        {
+                            Text = _bookShelf.BookPath;
+                        }
                     }
                     break;
                 default:
-                    Text = ""; // ※
+                    // Text = ""; // ※
                     break;
             }
         }

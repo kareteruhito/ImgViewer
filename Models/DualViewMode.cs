@@ -80,5 +80,6 @@ namespace Models
 
             return r;
         }
+        public string Parent { get => _book.Parent; }
     } // class
 } // namespace

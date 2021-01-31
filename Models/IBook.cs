@@ -11,5 +11,7 @@ namespace Models
         bool MoveLast();
 
         System.Drawing.Bitmap Page { get; }
+
+        string Parent { get; }
     }
 }

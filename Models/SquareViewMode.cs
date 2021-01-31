@@ -75,5 +75,6 @@ namespace Models
             _y = 0;
             return _book.MoveLast();
         }
+        public string Parent { get => _book.Parent; }
     }
 }
